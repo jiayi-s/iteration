@@ -1,0 +1,103 @@
+---
+title: "Writing_functions"
+author: "Jiayi Shen"
+date: "10/25/2018"
+output: html_document
+---
+
+```{r setup}
+library(tidyverse)
+set.seed(1)
+
+```
+
+my first function
+```{r}
+x = rnorm(25, mean = 5, sd = 3)
+
+# standardization 
+(x - mean(x)) / sd(x)
+```
+
+
+write a function to compute z scores for a vector. 
+
+```{r}
+z_scores = function (x) {
+  
+  (x - mean(x)) / sd(x)
+  
+}
+```
+
+
+check to see if this works ... 
+
+```{r}
+uniform_sample = runif(100)
+
+z_scores(uniform_sample)
+```
+
+check some other examples ...
+```{r, error = TRUE}
+z_scores(3)
+
+z_scores("my name is jeff")
+
+z_scores(iris)
+
+z_scores(sample(c(TRUE, FALSE), 25, replace = TRUE))
+```
+
+
+put in some checks on inputs ... 
+recommend to do 
+
+```{r, error = TRUE}
+z_scores = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Z scores cannot be computed for length 1 vectors")
+  }
+  
+  z = mean(x) / sd(x)
+  
+  z
+}
+
+z_scores(3)
+z_scores("my name is jeff")
+```
+
+
+
+just output mean and sd....
+put multiple outputs in a tibble (remember to load tidyverse library)
+
+```{r}
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Z scores cannot be computed for length 1 vectors")
+  }
+  
+  tibble (
+    mean(x),
+    sd(x)
+  )
+
+}
+
+mean_and_sd(x)
+```
+
+
+multiple inputs...
+
+
+
